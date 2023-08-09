@@ -1,57 +1,33 @@
-import java.util.*;
+import java.awt.*;
+import javax.swing.*;
 
-class RandomNumberGenerator extends Thread{
-    public void start(){
-        Random random = new Random();
+class App extends JFrame implements MouseListener{
+    JFrame frame;
+    JLabel message;
 
-        for(int i = 0; i<10; i++){
-            int randomInt = random.nextInt(10);
+    App(){
+        frame = new JFrame("Mouse Tracking");
+        message = new JLabel("Mouse tracking");
 
-            if(randomInt % 2==0){
-                SquareThread st = new SquareThread(randomInt);
-                st.start();
-            }else{
-                CubeThread ct = new CubeThread(randomInt);
-                ct.start();
-            }
+        frame.setSize(500, 500);
+        frame.setVisible(true);
+        frame.addMouseListener(this);
 
-            try{
-                Thread.sleep(1000);
-            }catch(InterruptedException ie){
-                System.out.println(ie);
-            }
-        }
+        frame.add(message);
+    }
+
+    public void mouseEntered(MouseEvent e)
+    {
+        message.setText("Mouse entered");
+    }
+    public void mouseExited(MouseEvent e)
+    {
+        message.setText("Mouse exited");
     }
 }
 
-class SquareThread extends Thread{
-    int n;
-
-    SquareThread(int num){
-        this.n = num;
-    }
-
-    public void start(){
-        System.out.println("Square of "+n+" is "+n*n);
-    }
-}
-
-class CubeThread extends Thread{
-    int n;
-
-    CubeThread(int num){
-        this.n = num;
-    }
-
-    public void start(){
-        System.out.println("Cube of "+n+" is "+n*n*name);
-    }
-}
-
-public class AppletExample{
+class AppletExample{
     public static void main(String args[]){
-        RandomNumberGenerator rn = new RandomNumberGenerator();
-        rn.start();
+        new App();
     }
 }
-        
